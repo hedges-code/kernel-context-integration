@@ -6,8 +6,8 @@ function App() {
   const handleDatasetPost = () => {
     const data = {
       datasets: [
-        { link: "url1" },
-        { link: "url2" }
+        { name: "dataset1", link: "url1" },
+        { name: "dataset2", link: "url2" }
       ]
     }
 
@@ -17,19 +17,13 @@ function App() {
     form.action = 'http://localhost:3000/api/context'
     form.style.display = 'none'
 
-    // Create individual hidden inputs for the data structure
-    data.datasets.forEach((dataset, index) => {
-      const input = document.createElement('input')
-      input.type = 'hidden'
-      input.name = `datasets[${index}][link]`
-      input.value = dataset.link
-      console.log('this is the input', input)
-      form.appendChild(input)
-    })
+    // Create a single hidden input with the JSON string of the entire data object
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = 'datasets'
+    input.value = JSON.stringify(data)
+    form.appendChild(input)
 
-    console.log('this is the data', data);
-    console.log("form inputs created for datasets");
-    
     document.body.appendChild(form)
     form.submit()
   }
