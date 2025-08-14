@@ -1,13 +1,19 @@
 import './App.css'
 
+// Potential to add more types in the future
+interface Dataset {
+  type: "link" | "markdownTable";
+  data: string;
+}
+
 function App() {
 
   // Function to handle form submission for datasets
   const handleDatasetPost = () => {
-    const data = {
+    const data: { datasets: Dataset[] } = {
       datasets: [
-        { name: "dataset1", link: "url1" },
-        { name: "dataset2", link: "url2" }
+        { type: "link", data: "url1" },
+        { type: "link", data: "url2" }
       ]
     }
 
@@ -34,6 +40,7 @@ function App() {
     const encodedContext = encodeURIComponent(contextString)
     
     // Redirect to Next.js application with context as query parameter
+    // TOOD - this might not be possible but send back status that contains a url
     window.location.href = `http://localhost:3000/cortex/chat/kernellilly-red?context=${encodedContext}`
   }
 
